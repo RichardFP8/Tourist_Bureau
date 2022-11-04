@@ -1,5 +1,4 @@
 "use strict";
-
 let hikes = [
     {
        id: "H101", 
@@ -29,3 +28,36 @@ let hikes = [
         difficulty: 2 
      },
  ];
+ window.onload = function(){
+   createList();
+   const getList = document.getElementById("hikingList");
+   getList.onchange = displayInformation;
+ }
+ function createList(){
+   const getList = document.getElementById("hikingList");
+   let length = hikes.length;
+   for(let i = 0; i < length; i++){
+      let createOption = new Option(hikes[i].name, hikes[i].name.toLowerCase());
+      getList.appendChild(createOption);
+   }
+ }
+ function displayInformation(){
+   const getDisplayDiv = document.getElementById("showHideDiv");
+   const valueOfList = document.getElementById("hikingList").value;
+   const firstImage = document.getElementById("firstImg");
+   const secondImage = document.getElementById("secondImg");
+   const getDescription = document.getElementById("description1");
+   let length = hikes.length;
+
+   
+   for(let i = 0; i < length; i++){
+      let theObject = hikes[i];
+      if(theObject.name.toLowerCase() === valueOfList ){
+         firstImage.src = "./images/" + theObject.scenicImage;
+         secondImage.src = "./images/" + theObject.trailMapImage;
+         getDescription.innerHTML = theObject.description;
+         getDisplayDiv.style.display = "block";
+         break;
+      }
+   }
+ }

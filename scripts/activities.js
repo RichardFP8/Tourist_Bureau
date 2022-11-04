@@ -111,7 +111,7 @@ window.onload = function () {
     const resetBtn = document.getElementById("reset");
     //two dropdowns for their on change events; and the form's onsubmit
     getCategories.onchange = showActivities;
-    selectedActivity.onchange = displayInformation;  
+    selectedActivity.onchange = displayInformation;
     getForm.onsubmit = displayMessage;
     resetBtn.onclick = resetAll;
 }
@@ -265,7 +265,7 @@ function displayMessage() {
     }
     return false;
 }
-function resetAll(){
+function resetAll() {
     //get all user inputs, even confirmation and error message because yes 
     document.getElementById("numOfTickets").value = "";
     document.getElementById("emailAddress").value = "";

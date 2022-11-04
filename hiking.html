@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./styles/styles.css" />
+    <title>Home Page</title>
+</head>
+
+<body>
+    <header>
+        <div class="bg-dark container-fluid">
+            <nav class="nav container">
+                <a class="nav-link text-light" href="#">Home</a>
+                <a class="nav-link text-light" href="activities.html">Activities</a>
+                <a class="nav-link active text-light" aria-current="page" href="hiking.html">Hiking</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <h1 class="display-2 text-end my-4 me-3">Where to Hike?</h1>
+        <select id="hikingList" class="form-control w-25 ms-auto" name="hikingOptions">
+            <option disabled selected value="">Select one</option>
+        </select>
+        <div id="showHideDiv" class="mt-5">
+            <div id="flexBox" class="mb-5">
+                <img id="firstImg" src="" alt="" />
+                <img id="secondImg" src="" alt="" />
+            </div>
+            <p id="description1"></p>
+        </div>
+
+
+
+    </main>
+    <script src="./scripts/hiking.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
