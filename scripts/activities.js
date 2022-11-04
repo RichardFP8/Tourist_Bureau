@@ -108,10 +108,12 @@ window.onload = function () {
     const getCategories = document.getElementById("main-categories");
     const selectedActivity = document.getElementById("activities");
     const getForm = document.getElementById("purchaseTickets");
+    const resetBtn = document.getElementById("reset");
     //two dropdowns for their on change events; and the form's onsubmit
     getCategories.onchange = showActivities;
     selectedActivity.onchange = displayInformation;  
     getForm.onsubmit = displayMessage;
+    resetBtn.onclick = resetAll;
 }
 //create the <option> "array" for the the main <select>
 function setupCategories() {
@@ -263,7 +265,15 @@ function displayMessage() {
     }
     return false;
 }
+function resetAll(){
+    //get all user inputs, even confirmation and error message because yes 
+    document.getElementById("numOfTickets").value = "";
+    document.getElementById("emailAddress").value = "";
+    document.getElementById("creditCard").value = "";
+    document.getElementById("error").innerHTML = "";
+    document.getElementById("confirmation").innerHTML = "";
 
+}
 
 /*
  kept this b/c this is the original work
