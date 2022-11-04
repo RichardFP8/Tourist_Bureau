@@ -104,13 +104,16 @@ let activities = [
 
 //call anonymous function on load
 window.onload = function () {
-    //setup the main dropdown, assign onchange to event handler
     setupCategories();
     const getCategories = document.getElementById("main-categories");
     const selectedActivity = document.getElementById("activities");
+    const getForm = document.getElementById("purchaseTickets");
+    //two dropdowns for their on change events; and the form's onsubmit
     getCategories.onchange = showActivities;
-    selectedActivity.onchange = displayInformation;
+    selectedActivity.onchange = displayInformation;  
+    getForm.onsubmit = displayMessage;
 }
+//create the <option> "array" for the the main <select>
 function setupCategories() {
     const mainCategories = document.getElementById("main-categories");
     let length = categories.length;
@@ -119,14 +122,24 @@ function setupCategories() {
         mainCategories.appendChild(createOption);
     }
 }
+//based on the above function ^; here is where the second dropdown's <option> is created
 function showActivities() {
     const displayActivities = document.getElementById("activities");
     const category = document.getElementById("main-categories");
+    const hideOtherContent = document.getElementById("activityInformation");
+    const hideForm = document.getElementById("purchaseTickets");
+
     let categoryIndex = category.selectedIndex;
     let categoryValue = category.value;
     let mainLength = categories.length;
-    const hideOtherContent = document.getElementById("activityInformation");
+
+    //hide the content of the other HTML elements
+    hideForm.style.display = "none";
     hideOtherContent.style.display = "none";
+    //when the main dropdown is changed; reset the second dropdown to "Select one" option
+    displayActivities.selectedIndex = 0;
+
+
 
     //outer loop; this will test the loop variable with the select' option's array, since they already start at 1
     for (let i = 1; i <= mainLength; i++) {
@@ -158,7 +171,8 @@ function showActivities() {
         }
     }
 }
-function displayInformation(){
+//here is where content of the second dropdown is shown; the properties/details of the activity
+function displayInformation() {
     //get the selected activity; and get all HTML elements that will display info
     const activityList = document.getElementById("activities");
     const activityListValue = activityList.value;
@@ -169,17 +183,16 @@ function displayInformation(){
     const getLocation = document.getElementById("activityLocation");
     const getPrice = document.getElementById("activityPrice");
 
-    //set the value of the second dropdown back to the first option, which is "Select one"
-    activityList.selectedIndex = 0;
     //we'll test the selected activity with the id property in activities array
     let length = activities.length;
+
     //run through each object in the activities array
-    for(let i = 0; i < length; i++){
+    for (let i = 0; i < length; i++) {
         /*turn the id value into lower case because in my previous function, I converted the elemen't value into lowercase
         This way it matches. I create a variable for it because I didn't like how it looked in my conditional...this is my project so */
         let theObject = activities[i];
         let value = theObject.id.toLowerCase();
-        if(value === activityListValue){
+        if (value === activityListValue) {
             //once the values match; display the content; get all properties and assign them to the corresponding element
             getId.innerHTML = "ID: " + theObject.id;
             getName.innerHTML = "Name: " + theObject.name;
@@ -187,9 +200,115 @@ function displayInformation(){
             getLocation.innerHTML = "Location: " + theObject.location;
             getPrice.innerHTML = "Price: $" + theObject.price;
             showAll.style.display = "block";
+
+            /*(here, I'll call the function that displays the purchase tickets; here because I'm getting the price's value based on the activity selected;
+            if test passes call the function else; just display and break from for loop*/
+            if (theObject.price > 0.00) {
+                displayForm();
+            }
             break;
         }
     }
 }
-// const test = document.getElementById("test");
-// test.innerHTML = category;
+//short function, just displaying the form if there's an actual price; I gave it its own function b/c yes
+function displayForm() {
+    const test = document.getElementById("test");
+    const getForm = document.getElementById("purchaseTickets");
+    getForm.style.display = "block";
+}
+//for the form; I added test cases for user inputs and then displayed confirmation
+function displayMessage() {
+    // get the value that was selected so that we can calculate price based off its price property and display its name as well
+    const getValueSelected = document.getElementById("activities").value;
+    //get user input
+    const numOfTickets = Number(document.getElementById("numOfTickets").value);
+    const getEmail = document.getElementById("emailAddress").value;
+    const getCardNumber = document.getElementById("creditCard").value;
+    const message = document.getElementById("error");
+    const confirmation = document.getElementById("confirmation");
+    let at = getEmail.indexOf("@");
+    let period = getEmail.indexOf(".");
+    //some test cases
+    if ((numOfTickets === 0) || (numOfTickets < 0) || (numOfTickets > 100)) {
+        message.innerHTML = "Not 0, no negatives, empties, or more than 100. Because no";
+        return;
+    }
+    //some other test cases
+    else if ((getCardNumber.length !== 9) || (getCardNumber.length > 9)) {
+        message.innerHTML = "9 digits please";
+        return;
+    }
+
+    //test case for email
+    else if ((at === -1) || (period === -1)) {
+        message.innerHTML = "Missing characters";
+        return;
+    }
+    //if it passes all the test, find the object in the activities array with the value retrieved
+    else {
+        message.innerHTML = "";
+        let length = activities.length;
+        let thePrice;
+        let theName;
+        for (let i = 0; i < length; i++) {
+            if (getValueSelected === activities[i].id.toLowerCase()) {
+                //once the values match, get the price and name property and get out
+                thePrice = activities[i].price;
+                theName = activities[i].name;
+                break;
+            }
+        }
+        let totalCost = numOfTickets * thePrice;
+        confirmation.innerHTML = "Your credit card has been charged $" + totalCost + " for " + numOfTickets + " tickets to " + theName + " A confirmation email has been sent to " + getEmail;
+    }
+    return false;
+}
+
+
+/*
+ kept this b/c this is the original work
+function testFormInputs() {
+    //get the value that was selected so that we can calculate price based off its price property and display its name as well
+    const getValueSelected = document.getElementById("activities").value;
+    //get user input
+    const numOfTickets = Number(document.getElementById("numOfTickets").value);
+    const getEmail = document.getElementById("emailAddress").value;
+    const getCardNumber = document.getElementById("creditCard").value;
+    const message = document.getElementById("error");
+    const confirmation = document.getElementById("confirmation");
+    let at = getEmail.indexOf("@");
+    let period = getEmail.indexOf(".");
+    //some test cases
+    if ((numOfTickets === 0) || (numOfTickets < 0) || (numOfTickets > 100)) {
+        message.innerHTML = "Not 0, no negatives, empties, or more than 100. Because no";
+        return;
+    }
+    //some other test cases
+    else if ((getCardNumber.length !== 9) || (getCardNumber.length > 9)) {
+        message.innerHTML = "9 digits please";
+        return;
+    }
+
+    //test case for email
+    else if ((at === -1) || (period === -1)) {
+        message.innerHTML = "Missing characters";
+        return;
+    }
+    //if it passes all the test, find the object in the activities array with the value retrieved
+    else {
+        let length = activities.length;
+        let thePrice;
+        let theName;
+        for (let i = 0; i < length; i++) {
+            if (getValueSelected === activities[i].id.toLowerCase()) {
+                //once the values match, get the price and name property and get out
+                thePrice = activities[i].price;
+                theName = activities[i].name;
+                break;
+            }
+        }
+        let totalCost = numOfTickets * thePrice;
+        confirmation.innerHTML = "Your credit card has been charged $" + totalCost + " for " + numOfTickets + " tickets to " + theName + " A confirmation email has been sent to " + getEmail;
+    }
+}
+*/
