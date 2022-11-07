@@ -146,7 +146,7 @@ function showActivities() {
     //outer loop; this will test the loop variable with the select' option's array, since they already start at 1
     for (let i = 1; i <= mainLength; i++) {
         if (i === categoryIndex) {
-            //make sure the second dropdown only has one element on change, which is the "Select one" option
+            //make sure the second dropdown only has one element on change event, which is the "Select one" option
             displayActivities.options.length = 1;
             //creating a new array for the objects in activities array related to the category selected
             let activitiesRelated = [];
@@ -220,6 +220,7 @@ function displayForm() {
 }
 //for the form; I added test cases for user inputs and then displayed confirmation
 function displayMessage() {
+    // const test = document.getElementById("test");
     // get the value that was selected so that we can calculate price based off its price property and display its name as well
     const getValueSelected = document.getElementById("activities").value;
     //get user input
@@ -233,18 +234,14 @@ function displayMessage() {
     //some test cases
     if ((numOfTickets === 0) || (numOfTickets < 0) || (numOfTickets > 100)) {
         message.innerHTML = "Not 0, no negatives, empties, or more than 100. Because no";
-        return;
     }
     //some other test cases
     else if ((getCardNumber.length !== 9) || (getCardNumber.length > 9)) {
         message.innerHTML = "9 digits please";
-        return;
     }
-
     //test case for email
     else if ((at === -1) || (period === -1)) {
-        message.innerHTML = "Missing characters";
-        return;
+        message.innerHTML = "Missing characters for the email";
     }
     //if it passes all the test, find the object in the activities array with the value retrieved
     else {
@@ -263,6 +260,7 @@ function displayMessage() {
         let totalCost = numOfTickets * thePrice;
         confirmation.innerHTML = "Your credit card has been charged $" + totalCost + " for " + numOfTickets + " tickets to " + theName + " A confirmation email has been sent to " + getEmail;
     }
+
     return false;
 }
 function resetAll() {
