@@ -233,7 +233,7 @@ function displayMessage() {
     let period = getEmail.indexOf(".");
     //some test cases
     if ((numOfTickets === 0) || (numOfTickets < 0) || (numOfTickets > 100)) {
-        message.innerHTML = "Not 0, no negatives, empties, or more than 100. Because no";
+        message.innerHTML = "Not 0, less than 0, no negatives, empties, or more than 100. Because no";
     }
     //some other test cases
     else if ((getCardNumber.length !== 9) || (getCardNumber.length > 9)) {
