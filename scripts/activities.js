@@ -109,13 +109,13 @@ window.onload = function () {
     const selectedActivity = document.getElementById("activities");
     const getForm = document.getElementById("purchaseTickets");
     const resetBtn = document.getElementById("reset");
-    //two dropdowns for their on change events; and the form's onsubmit
+    //two dropdowns for their on change events; and the form's buttons
     getCategories.onchange = showActivities;
     selectedActivity.onchange = displayInformation;
     getForm.onsubmit = displayMessage;
     resetBtn.onclick = resetAll;
 }
-//create the <option> "array" for the the main <select>
+//create the <option>'s array for the main <select>
 function setupCategories() {
     const mainCategories = document.getElementById("main-categories");
     let length = categories.length;
@@ -141,8 +141,6 @@ function showActivities() {
     //when the main dropdown is changed; reset the second dropdown to "Select one" option
     displayActivities.selectedIndex = 0;
 
-
-
     //outer loop; this will test the loop variable with the select' option's array, since they already start at 1
     for (let i = 1; i <= mainLength; i++) {
         if (i === categoryIndex) {
@@ -160,7 +158,7 @@ function showActivities() {
                     index++;
                 }
             }
-            //with the new array, we have a smaller set of elements; find the length 
+            //with the new array, we have a smaller set of elements; get the length 
             let newLength = activitiesRelated.length;
             //add each of the name properties to the second dropdown; value is their id property
             for (let x = 0; x < newLength; x++) {
@@ -204,7 +202,7 @@ function displayInformation() {
             showAll.style.display = "block";
 
             /*(here, I'll call the function that displays the purchase tickets; here because I'm getting the price's value based on the activity selected;
-            if test passes call the function else; just display and break from for loop*/
+            if test passes call the function; else just display and break from for loop*/
             if (theObject.price > 0.00) {
                 displayForm();
             }
@@ -214,13 +212,11 @@ function displayInformation() {
 }
 //short function, just displaying the form if there's an actual price; I gave it its own function b/c yes
 function displayForm() {
-    const test = document.getElementById("test");
     const getForm = document.getElementById("purchaseTickets");
     getForm.style.display = "block";
 }
 //for the form; I added test cases for user inputs and then displayed confirmation
 function displayMessage() {
-    // const test = document.getElementById("test");
     // get the value that was selected so that we can calculate price based off its price property and display its name as well
     const getValueSelected = document.getElementById("activities").value;
     //get user input
@@ -229,8 +225,8 @@ function displayMessage() {
     const getCardNumber = document.getElementById("creditCard").value;
     const message = document.getElementById("error");
     const confirmation = document.getElementById("confirmation");
-    let at = getEmail.indexOf("@");
-    let period = getEmail.indexOf(".");
+    let atSymbol = getEmail.indexOf("@");
+    let periodSymbol = getEmail.indexOf(".");
     //some test cases
     if ((numOfTickets === 0) || (numOfTickets < 0) || (numOfTickets > 100)) {
         message.innerHTML = "Not 0, less than 0, no negatives, empties, or more than 100. Because no";
@@ -239,8 +235,8 @@ function displayMessage() {
     else if ((getCardNumber.length !== 9) || (getCardNumber.length > 9)) {
         message.innerHTML = "9 digits please";
     }
-    //test case for email
-    else if ((at === -1) || (period === -1)) {
+    //test cases for email
+    else if ((atSymbol === -1) || (periodSymbol === -1)) {
         message.innerHTML = "Missing characters for the email";
     }
     //if it passes all the test, find the object in the activities array with the value retrieved
@@ -258,13 +254,12 @@ function displayMessage() {
             }
         }
         let totalCost = numOfTickets * thePrice;
-        confirmation.innerHTML = "Your credit card has been charged $" + totalCost + " for " + numOfTickets + " tickets to " + theName + " A confirmation email has been sent to " + getEmail;
+        confirmation.innerHTML = `Your credit card has been charged $${totalCost} for ${numOfTickets} tickets to ${theName}. A confirmation email has been sent to ${getEmail}`;
     }
-
     return false;
 }
 function resetAll() {
-    //get all user inputs, even confirmation and error message because yes 
+    //get all user inputs, even confirmation and error message because why not 
     document.getElementById("numOfTickets").value = "";
     document.getElementById("emailAddress").value = "";
     document.getElementById("creditCard").value = "";
